@@ -394,27 +394,49 @@
     </div>
 
     <script>
-        function showSurprise() {
-            const message = document.getElementById('specialMessage');
-            message.classList.add('show');
-            createHeartExplosion();
-            if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 300]);
-        }
+    function showSurprise() {
+        const message = document.getElementById('specialMessage');
+        message.classList.add('show');
+        createHeartExplosion();
 
-        function createHeartExplosion() {
-            const hearts = ['❤️','💖','💕','💗','💓','💝','♥️','💘'];
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart-explosion';
-                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * window.innerWidth + 'px';
-                    heart.style.top = Math.random() * window.innerHeight + 'px';
-                    document.body.appendChild(heart);
-                    setTimeout(() => heart.remove(), 2000);
-                }, i * 80);
-            }
+        if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200, 100, 300]);
         }
-    </script>
+    }
+
+    function createHeartExplosion() {
+        const hearts = ['❤️','💖','💕','💗','💓','💝','♥️','💘'];
+
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+
+                heart.className = 'heart-explosion';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = Math.random() * window.innerHeight + 'px';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+
+            }, i * 80);
+        }
+    }
+
+    // Executa automaticamente quando a página abre
+    window.addEventListener('load', () => {
+        document.getElementById('specialMessage').classList.add('show');
+
+        // Primeira explosão
+        createHeartExplosion();
+
+        // Novas explosões a cada 3 segundos
+        setInterval(createHeartExplosion, 3000);
+    });
+</script>
 </body>
 </html>
